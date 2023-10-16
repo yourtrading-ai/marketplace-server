@@ -25,7 +25,7 @@ export async function registerBuy(params: RegisterBuyParams) {
     try {
         if (!config.rpc) return new Response('Error: Server rpc not configured', { status: 500 });
         if (!config.messagesKey) return new Response('Error: MessagesKey not configured', { status: 500 });
-        if (!config.indexerApi) return new Response('Error: MessagesKey not configured', { status: 500 });
+        if (!config.indexerApi) return new Response('Error: IndexerApi not configured', { status: 500 });
         if (!params.signer || !params.marketplace || !params.productId || !params.paymentMint || !params.seller || !params.marketplaceAuth || !params.params) {
             return new Response('Error: Missing required information', { status: 500 });
         }
@@ -46,7 +46,7 @@ export async function registerBuy(params: RegisterBuyParams) {
         );
         const accountInfo = await connection.getAccountInfo(product);
         const productInfo = ACCOUNTS_DATA_LAYOUT[AccountType.Product].deserialize(accountInfo?.data)[0] as Product
-        const itemHash = await generateAlephMessage({ 
+        const itemHash = await generateAlephMessage({
             product: product.toString(), 
             seller: params.seller as string, 
             signer: params.signer as string, 
