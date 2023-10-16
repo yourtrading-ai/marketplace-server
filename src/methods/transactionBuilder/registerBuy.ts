@@ -25,9 +25,9 @@ export async function registerBuy(params: RegisterBuyParams) {
     console.log('registerBuy starts');
 
     try {
-        if (!config.rpc) return new Response('Error: Server rpc not configured', { status: 500 });
-        if (!config.messagesKey) return new Response('Error: MessagesKey not configured', { status: 500 });
-        if (!config.indexerApi) return new Response('Error: IndexerApi not configured', { status: 500 });
+        if (!config.RPC) return new Response('Error: Server rpc not configured', { status: 500 });
+        if (!config.MESSAGES_KEY) return new Response('Error: MessagesKey not configured', { status: 500 });
+        if (!config.INDEXER_API) return new Response('Error: IndexerApi not configured', { status: 500 });
         if (!params.signer || !params.marketplace || !params.productId || !params.paymentMint || !params.seller || !params.marketplaceAuth || !params.params) {
             return new Response('Error: Missing required information', { status: 500 });
         }
@@ -47,8 +47,16 @@ export async function registerBuy(params: RegisterBuyParams) {
             BRICK_PROGRAM_ID_PK
         );
 
+        console.log('Market key: ', marketKey.toString())
+        console.log('Product: ', product.toString())
+
         const accountInfo = await connection.getAccountInfo(product);
+
+        console.log('Account info: ', accountInfo)
+
         const productInfo = ACCOUNTS_DATA_LAYOUT[AccountType.Product].deserialize(accountInfo?.data)[0] as Product
+
+        console.log('Product info: ', productInfo)
 
         const itemHash = await generateAlephMessage({
             product: product.toString(), 
