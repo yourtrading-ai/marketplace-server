@@ -42,6 +42,9 @@ export async function initProductTree(params: InitProductTreeParams) {
         }
         console.log('Normalized params ', normalizeParams)
         const transaction = await createInitProductTreeTransaction(connection, accounts, normalizeParams);
+
+        console.log('Transaction ', transaction)
+
         const serializedTransaction = Buffer.from(transaction.serialize()).toString('base64')
         console.log('Serialized transaction ', serializedTransaction)
 

@@ -22,7 +22,7 @@ export async function validateSignature(signature: string, productId: string): P
         }
         console.log('Found the transaction from signature')
 
-        const [context] = BrickLayout[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
+        const [context] = BrickLayout.dataLayoutMap[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
         const { ...result } = context;
         const product = tx?.transaction.message.staticAccountKeys[4]?.toString() || '';
         const signer = tx?.transaction.message.staticAccountKeys[0]?.toString() || '';   

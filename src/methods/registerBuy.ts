@@ -37,8 +37,8 @@ export async function registerBuy(params: RegisterBuyParams) {
         const marketKey = new PublicKey(params.marketplace)
         const [product] = PublicKey.findProgramAddressSync(
             [
-              Buffer.from("product", "utf-8"), 
-              firstId, 
+              Buffer.from("product", "utf-8"),
+              firstId,
               secondId,
               marketKey.toBuffer()
             ],
@@ -97,6 +97,12 @@ export async function registerBuy(params: RegisterBuyParams) {
     }
 }
 
-export function splitId(str: string): [Buffer, Buffer] {
-    return [Buffer.from(str, 'hex'), Buffer.from(str, 'hex')]
+export function splitId(str: string): [Buffer, Buffer]{
+    const bytes = new TextEncoder().encode(str);
+
+    const data = new Uint8Array(64);
+    data.fill(32);
+    data.set(bytes);
+
+    return [Buffer.from(data.slice(0, 32)), Buffer.from(data.slice(32))];
 }
