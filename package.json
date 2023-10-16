@@ -17,6 +17,7 @@
     "@solana/web3.js": "^1.78.4",
     "aleph-sdk-ts": "^3.6.3",
     "brick-protocol": "^0.0.24",
+    "bun": "^1.0.6",
     "dotenv": "^16.3.1",
     "elysia": "latest"
   }

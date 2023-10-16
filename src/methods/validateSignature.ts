@@ -1,6 +1,6 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { ImportAccountFromPrivateKey } from "aleph-sdk-ts/dist/accounts/solana";
-import { IX_DATA_LAYOUT, InstructionType, queryAccounts, Product, AccountType } from "brick-protocol";
+import { BrickLayout, InstructionType, queryAccounts, Product, AccountType } from "brick-protocol";
 import { existsMessage, generateAlephMessage } from "../aleph";
 import { config } from "../config";
 import { ACCOUNTS_DATA_LAYOUT } from "../utils/accounts";
@@ -22,7 +22,7 @@ export async function validateSignature(signature: string, productId: string): P
         }
         console.log('Found the transaction from signature')
 
-        const [context] = IX_DATA_LAYOUT[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
+        const [context] = BrickLayout[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
         const { ...result } = context;
         const product = tx?.transaction.message.staticAccountKeys[4]?.toString() || '';
         const signer = tx?.transaction.message.staticAccountKeys[0]?.toString() || '';   
